@@ -1,25 +1,35 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:spotifyCloneUi/provider/current_user.dart';
+import 'package:spotifyCloneUi/screens/email_login.dart';
 import 'package:spotifyCloneUi/screens/email_signup.dart';
+import 'package:spotifyCloneUi/screens/phone_signup.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData.dark(),
-      darkTheme: ThemeData(
-        scaffoldBackgroundColor: Colors.black,
-        textTheme: TextTheme(bodyText2: TextStyle(color: Colors.white)),
+    return ChangeNotifierProvider(
+      create: (context) => CurrentUser(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData.dark(),
+        darkTheme: ThemeData(
+          scaffoldBackgroundColor: Colors.black,
+          textTheme: TextTheme(bodyText2: TextStyle(color: Colors.white)),
+        ),
+        themeMode: ThemeMode.dark,
+        home: HomeScreen(),
       ),
-      themeMode: ThemeMode.dark,
-      home: HomeScreen(),
     );
   }
 }
@@ -129,7 +139,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30.0),
                     child: MaterialButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => PhoneSignUpScreen()),
+                        );
+                      },
                       height: 50.0,
                       minWidth: double.infinity,
                       shape: RoundedRectangleBorder(
@@ -181,7 +197,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   SizedBox(height: 10.0),
                   FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                            builder: (context) => EmailLoginScreen()),
+                      );
+                    },
                     child: Text('Log in',
                         style: TextStyle(
                             color: Colors.white, fontWeight: FontWeight.w700)),

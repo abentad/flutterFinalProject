@@ -4,21 +4,21 @@ import 'package:provider/provider.dart';
 import 'package:spotifyCloneUi/provider/current_user.dart';
 import 'package:spotifyCloneUi/screens/main_screen.dart';
 
-class EmailSignUpScreen extends StatefulWidget {
+class EmailLoginScreen extends StatefulWidget {
   @override
-  _EmailSignUpScreenState createState() => _EmailSignUpScreenState();
+  _EmailLoginScreenState createState() => _EmailLoginScreenState();
 }
 
-class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
+class _EmailLoginScreenState extends State<EmailLoginScreen> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  void _signUpUser(String email, String password, BuildContext context) async {
+  void _loginUser(String email, String password, BuildContext context) async {
     CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
     try {
-      if (await _currentUser.signUpUser(email, password)) {
+      if (await _currentUser.loginUser(email, password)) {
         Navigator.pushReplacement(
           context,
           CupertinoPageRoute(builder: (context) => MainScreen()),
@@ -34,7 +34,7 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('Create Account'),
+        title: Text('Log In'),
         centerTitle: true,
         shadowColor: Colors.transparent,
         backgroundColor: Colors.transparent,
@@ -101,7 +101,7 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
                     onPressed: () {
                       if (_passwordController.text != "" &&
                           _passwordController.text != null) {
-                        _signUpUser(_emailController.text,
+                        _loginUser(_emailController.text,
                             _passwordController.text, context);
                       } else {
                         _scaffoldKey.currentState.showSnackBar(
@@ -119,7 +119,7 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
                       borderRadius: BorderRadius.circular(50.0),
                     ),
                     child: Text(
-                      'SIGN UP',
+                      'LOG IN',
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.w600,
