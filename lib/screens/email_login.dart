@@ -20,9 +20,10 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
     try {
       var _result = await _currentUser.loginUserWithEmail(email, password);
       if (_result == "success") {
-        Navigator.pushReplacement(
+        Navigator.pushAndRemoveUntil(
           context,
           CupertinoPageRoute(builder: (context) => MainScreen()),
+          (route) => false,
         );
       } else {
         _scaffoldKey.currentState.showSnackBar(

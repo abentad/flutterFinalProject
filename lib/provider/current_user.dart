@@ -11,6 +11,19 @@ class CurrentUser extends ChangeNotifier {
 
   FirebaseAuth _auth = FirebaseAuth.instance;
 
+  String onStartUp() {
+    String retval = "error";
+    try {
+      User _firebaseUser = _auth.currentUser;
+      _uid = _firebaseUser.uid;
+      _email = _firebaseUser.email;
+      retval = "success";
+    } catch (e) {
+      print(e);
+    }
+    return retval;
+  }
+
   //signs up user using email and password
   Future<String> signUpUserWithEmail(String email, String password) async {
     String retVal = "error";
@@ -71,5 +84,18 @@ class CurrentUser extends ChangeNotifier {
       retVal = e.message;
     }
     return retVal;
+  }
+
+  Future<String> signOut() async {
+    String retval = "error";
+    try {
+      await _auth.signOut();
+      _uid = null;
+      _email = null;
+      retval = "success";
+    } catch (e) {
+      print(e);
+    }
+    return retval;
   }
 }
