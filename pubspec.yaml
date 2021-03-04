@@ -16,6 +16,7 @@ dependencies:
 
   firebase_core:
   firebase_auth:
+  google_sign_in:
   provider:
 
   font_awesome_flutter: ^8.11.0

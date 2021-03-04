@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:spotifyCloneUi/provider/current_user.dart';
 import 'package:spotifyCloneUi/screens/email_login.dart';
 import 'package:spotifyCloneUi/screens/email_signup.dart';
+import 'package:spotifyCloneUi/screens/main_screen.dart';
 import 'package:spotifyCloneUi/screens/phone_signup.dart';
 
 void main() async {
@@ -44,6 +45,31 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
     final deviceWidth = MediaQuery.of(context).size.width;
+
+    GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+    void _loginUserWithGoogle(BuildContext context) async {
+      CurrentUser _currentUser =
+          Provider.of<CurrentUser>(context, listen: false);
+      try {
+        var _result = await _currentUser.loginUserWithGoogle();
+        if (_result == "success") {
+          Navigator.pushReplacement(
+            context,
+            CupertinoPageRoute(builder: (context) => MainScreen()),
+          );
+        } else {
+          _scaffoldKey.currentState.showSnackBar(
+            SnackBar(
+              content: Text(_result.toString()),
+              duration: Duration(seconds: 3),
+            ),
+          );
+        }
+      } catch (e) {
+        print(e);
+      }
+    }
 
     return Scaffold(
       body: SafeArea(
@@ -172,7 +198,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30.0),
                     child: MaterialButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _loginUserWithGoogle(context);
+                      },
                       height: 50.0,
                       minWidth: double.infinity,
                       shape: RoundedRectangleBorder(

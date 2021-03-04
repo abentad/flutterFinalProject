@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "752950347954-hhb63u94blvhv6ovore76gi0ertfbf58.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.abdev.medebir",
+            "certificate_hash": "5bbe82572c55ecad1520d06d6b0431b9e9664a0a"
+          }
+        },
+        {
           "client_id": "752950347954-l0c5kujinfue02ki3ld7grv6uoiq9vaa.apps.googleusercontent.com",
           "client_type": 3
         }
