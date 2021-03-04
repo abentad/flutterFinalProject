@@ -18,10 +18,18 @@ class _EmailSignUpScreenState extends State<EmailSignUpScreen> {
   void _signUpUser(String email, String password, BuildContext context) async {
     CurrentUser _currentUser = Provider.of<CurrentUser>(context, listen: false);
     try {
-      if (await _currentUser.signUpUser(email, password)) {
+      var _result = await _currentUser.signUpUserWithEmail(email, password);
+      if (_result == "success") {
         Navigator.pushReplacement(
           context,
           CupertinoPageRoute(builder: (context) => MainScreen()),
+        );
+      } else {
+        _scaffoldKey.currentState.showSnackBar(
+          SnackBar(
+            content: Text(_result.toString()),
+            duration: Duration(seconds: 3),
+          ),
         );
       }
     } catch (e) {
